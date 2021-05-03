@@ -78,14 +78,40 @@ public class select_insert_duplicateDB {
 		}
 
 	}
+	
+	public void joinDB() {
+		
+			Connection con = null;
+			String QUERY = "Select e.emp_name, d.dept_name from jdbc_demo.emp_table e join jdbc_demo.dept d on e.emp_dept = d.dept_name"; 
+
+
+			try {
+				con = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+				Statement statement = con.createStatement();
+				ResultSet results = statement.executeQuery(QUERY);
+				System.out.println("Employee and his department");
+				System.out.println("Emp_name" + "\t" + "Dept_name" );
+				while (results.next()) {
+					
+					String emp_name = results.getString("emp_name");
+					
+					String dept = results.getString("dept_name");
+					System.out.println(emp_name + "\t\t" + dept );
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
 
 	public static void main(String[] args) {
 
 		select_insert_duplicateDB obj = new select_insert_duplicateDB();
 		obj.selectFunc();
-		obj.insertFunction();
-		obj.selectFunc();
-		obj.removeDuplicate();
-		obj.selectFunc();
+//		obj.insertFunction();
+//		obj.selectFunc();
+//		obj.removeDuplicate();
+//		obj.selectFunc();
+		obj.joinDB();
 	}
 }
